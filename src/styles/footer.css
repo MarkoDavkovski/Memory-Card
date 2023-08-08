@@ -1,0 +1,23 @@
+.footer {
+  color: white;
+  text-align: center;
+  width: 100%;
+  padding: 1rem;
+  font-size: 1.2rem;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+}
+a {
+  color: white;
+  text-decoration: none;
+}
+.gh-icon {
+  font-size: 1.3rem;
+  transition: transform 300ms ease-in-out;
+}
+.gh-icon:hover {
+  transform: rotate(360deg) scale(1.2);
+  cursor: pointer;
+  color: rgb(91, 212, 142);
+}

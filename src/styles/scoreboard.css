@@ -1,0 +1,8 @@
+.scoreboard-section {
+  color: white;
+  position: absolute;
+  top: 1rem;
+  right: 4rem;
+  display: flex;
+  gap: 1rem;
+}
