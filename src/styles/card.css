@@ -42,17 +42,21 @@
 }
 
 @media (max-width: 1366px) and (max-height: 780px) {
+  .card-space {
+    height: 150px;
+  }
+  .img-container {
+    height: 100%;
+  }
   .img-container > img {
     height: 100%;
   }
+
   .cards-container {
     grid-template-columns: repeat(auto-fit, 150px);
     gap: 0.5rem;
   }
   .card-title {
-    font-size: 0.7rem;
-    font-weight: bold;
+    display: none;
   }
-}
-@media (max-width: 1366px) and (max-height: 780px) {
 }
