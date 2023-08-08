@@ -8,9 +8,11 @@ import ScoreBoard from "./components/ScoreBoard";
 function App() {
   const [cards, setCards] = useState([]);
   const [loading, setLoading] = useState(true);
+
   const [scoreArr, setScoreArr] = useState([]);
   const [currScore, setCurrScore] = useState(0);
   const [bestScore, setBestScore] = useState(0);
+
   const [message, setMessage] = useState("Loading cards...");
 
   useEffect(() => {

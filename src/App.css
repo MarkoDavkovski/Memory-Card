@@ -11,6 +11,9 @@
   padding: 3rem;
   padding-bottom: 0;
   overflow-x: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 #root::before {
   content: "";
