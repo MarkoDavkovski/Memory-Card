@@ -8,6 +8,7 @@ import ScoreBoard from "./components/ScoreBoard";
 function App() {
   const [cards, setCards] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   const [scoreArr, setScoreArr] = useState([]);
   const [currScore, setCurrScore] = useState(0);
@@ -26,21 +27,26 @@ function App() {
         const responses = await Promise.all(
           Array.from({ length: numberOfCards }, async () => {
             const response = await fetch(url, { mode: "cors" });
+            if (!response.ok) {
+              throw new Error("Network response was not ok");
+            }
             return response.json();
           })
         );
-
         const randomCards = responses.map((data, index) => ({
           id: index,
           imgUrl: data.data.images.original.url,
           title: data.data.title,
         }));
 
+        setError(null);
         setCards(randomCards);
-        setLoading(false);
-      } catch (error) {
-        console.error("Error fetching images:", error);
+      } catch (err) {
+        // console.error("Error fetching images:", err);
+        setError(err.message);
         setCards([]);
+        setLoading(false);
+      } finally {
         setLoading(false);
       }
     };
@@ -102,6 +108,8 @@ function App() {
       <main className="cards-container">
         {loading ? (
           <h1>{message}</h1>
+        ) : error ? (
+          <h1>{error}</h1>
         ) : (
           cards.map((card) => (
             <Card
