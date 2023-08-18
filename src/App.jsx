@@ -19,34 +19,33 @@ function App() {
     const fetchData = async () => {
       const apiKey = "5g2nTxUic4kwgJu5Um62Pqt2H5z3IHlf";
       const randomTag = "nature";
-      const url = `https://api.giphy.com/v1/gifs/random?api_key=${apiKey}&tag=${randomTag}&limit=1`;
+      const numberOfCards = 10;
+      const url = `https://api.giphy.com/v1/gifs/random?api_key=${apiKey}&tag=${randomTag}&limit=${numberOfCards}`;
 
       try {
-        const response = await fetch(url);
-        const data = await response.json();
-        const imgUrl = data.data.images.original.url;
-        const title = data.data.title;
+        const responses = await Promise.all(
+          Array.from({ length: numberOfCards }, async () => {
+            const response = await fetch(url, { mode: "cors" });
+            return response.json();
+          })
+        );
 
-        return { url: imgUrl, title: title };
+        const randomCards = responses.map((data, index) => ({
+          id: index,
+          imgUrl: data.data.images.original.url,
+          title: data.data.title,
+        }));
+
+        setCards(randomCards);
+        setLoading(false);
       } catch (error) {
-        console.error("Error fetching image:", error);
-        return { url: "", title: "" };
+        console.error("Error fetching images:", error);
+        setCards([]);
+        setLoading(false);
       }
     };
 
-    const generateRandomCards = async () => {
-      const randomCards = [];
-      for (let i = 0; i < 10; i++) {
-        const img = await fetchData();
-
-        randomCards.push({ id: i, imgUrl: img.url, title: img.title });
-      }
-
-      setCards(randomCards);
-      setLoading(false);
-    };
-
-    generateRandomCards();
+    fetchData();
   }, []);
 
   const shuffleCards = () => {
